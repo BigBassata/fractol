@@ -1,0 +1,73 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: licohen <licohen@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/30 21:53:49 by licohen           #+#    #+#             */
+/*   Updated: 2024/10/07 15:28:24 by licohen          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "fractol.h"
+
+int	mouse_events(int button, int x, int y, t_fractal *fractal)
+{
+	(void)x;
+	(void)y;
+	if (button == 4)
+		zoom(fractal, ZOOM_IN);
+	else if (button == 5)
+		zoom(fractal, ZOOM_OUT);
+	else
+		return (0);
+	mlx_destroy_image(fractal->disp, fractal->img.img);
+	render(fractal);
+	return (0);
+}
+
+int	key_release(int keysym, t_fractal *fractal)
+{
+	if (keysym == XK_Escape)
+		quit(fractal);
+	return (0);
+}
+
+int	key_press(int keysym, t_fractal *fractal)
+{
+	if (keysym == XK_Right || keysym == XK_Left || keysym == XK_Down
+		|| keysym == XK_Up)
+		move(keysym, fractal);
+	else if (keysym == XK_Escape)
+		quit(fractal);
+	else
+		return (0);
+	mlx_destroy_image(fractal->disp, fractal->img.img);
+	render(fractal);
+	return (0);
+}
+
+void	move(int keysym, t_fractal *fractal)
+{
+	if (keysym == XK_Right)
+	{
+		fractal->vars.x_min += fractal->vars.dist_x / 5;
+		fractal->vars.x_max += fractal->vars.dist_x / 5;
+	}
+	else if (keysym == XK_Left)
+	{
+		fractal->vars.x_min -= fractal->vars.dist_x / 5;
+		fractal->vars.x_max -= fractal->vars.dist_x / 5;
+	}
+	else if (keysym == XK_Up)
+	{
+		fractal->vars.y_max -= fractal->vars.dist_y / 5;
+		fractal->vars.y_min -= fractal->vars.dist_y / 5;
+	}
+	else if (keysym == XK_Down)
+	{
+		fractal->vars.y_max += fractal->vars.dist_y / 5;
+		fractal->vars.y_min += fractal->vars.dist_y / 5;
+	}
+}
