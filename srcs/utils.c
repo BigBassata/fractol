@@ -6,27 +6,11 @@
 /*   By: licohen <licohen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 21:29:45 by licohen           #+#    #+#             */
-/*   Updated: 2024/10/07 15:29:31 by licohen          ###   ########.fr       */
+/*   Updated: 2024/10/08 14:01:19 by licohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
-void	mlx_funcs(t_fractal *fractal)
-{
-	fractal->disp = mlx_init();
-	if (fractal->disp == NULL)
-		malloc_error("Error calling mlx_init\n", fractal);
-	fractal->win = mlx_new_window(fractal->disp, WIDTH, HEIGHT, fractal->name);
-	if (fractal->win == NULL)
-		malloc_error("Error calling mlx_new_window\n", fractal);
-	mlx_mouse_hook(fractal->win, mouse_events, fractal);
-	mlx_key_hook(fractal->win, key_release, fractal);
-	mlx_hook(fractal->win, KeyPress, KeyPressMask, key_press, fractal);
-	mlx_hook(fractal->win, DestroyNotify, ButtonReleaseMask, quit, fractal);
-	mlx_expose_hook(fractal->win, render, fractal);
-	mlx_loop(fractal->disp);
-}
 
 void	invalid_args(void)
 {
