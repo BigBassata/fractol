@@ -6,7 +6,7 @@
 /*   By: licohen <licohen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 21:53:49 by licohen           #+#    #+#             */
-/*   Updated: 2024/10/07 15:28:24 by licohen          ###   ########.fr       */
+/*   Updated: 2024/10/07 17:20:32 by licohen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,14 @@ int	key_press(int keysym, t_fractal *fractal)
 	if (keysym == XK_Right || keysym == XK_Left || keysym == XK_Down
 		|| keysym == XK_Up)
 		move(keysym, fractal);
-	else if (keysym == XK_Escape)
-		quit(fractal);
+	else if (keysym == XK_r)
+		fractal->color_def += RED;
+	else if (keysym == XK_g)
+		fractal->color_def += GREEN;
+	else if (keysym == XK_b)
+		fractal->color_def += BLUE;
+	else if (keysym == XK_i)
+		fractal->iter += 25;
 	else
 		return (0);
 	mlx_destroy_image(fractal->disp, fractal->img.img);
